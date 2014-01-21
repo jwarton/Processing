@@ -1,0 +1,99 @@
+void setup() {
+  size(750, 750);
+  background(0);
+
+  translate(width/2, height/2);
+  fill(180, 0, 0, 20);
+  color c1 = color(100, 0, 200);
+
+  pushMatrix();
+  rotate(2*PI);
+  translate(-30, 93);
+  drawRectangles2(0, 0, (width/2), 100, 40);
+  popMatrix();
+  
+  drawRectangles(0, 0, 150, 60, 1);
+  drawRectangles(0, 0, 200, 120, 1);
+  drawRectangles(0, 0, 300, 100, 1);
+  drawRectangles(0, 0, 290, 50, 1, c1);
+}
+
+void drawRectangles(int x, int y, int radius, int count, int size) {
+  for (int i = 0; i < count; i++) {
+   
+    float alpha = ((i * 100)/count);      
+    float colR = ((i * 255)/count);
+    float colG = 255-((i * 255)/count);
+    float colB = 255-(((i * 255)/count)/5);
+
+    stroke(240, 200, 250, alpha);
+    fill(colR, colG, colB, alpha);
+    
+
+    rotate(1.25*PI/count);
+    rectMode(CENTER);
+
+    if (i < int(count/2)) {
+      rect(radius-(i*2), y, (size-(i/5)), (size-(i/2)));
+    } 
+    else {
+      rect(radius-(i*2), y, (size-((count - i)/5)), (size-((count - i)/2)));
+    }
+
+    
+    pushMatrix();
+    for (int j = 0; j<13; j++) {
+      rotate((4*PI/i));
+      rectMode(CENTER);
+      ellipse(radius-(i*2), y, (size-(i/10)), 2);
+
+      if (i < int(count/2)) {
+        rect(radius-(i*2), y, (size-(i/5)), (size-(i/2)));
+      } 
+      else {
+        rect(radius-(i*2), y, (size-((count - i)/5)), (size-((count - i)/2)));
+      }
+    }
+    popMatrix();
+
+    stroke(i, 0, 255, i+35);
+    int num = (i+1);
+    ellipse(radius, 0, (count/num), 2);
+    drawRectangles2(0, 0, radius, 50, 2);
+  }
+}
+
+void drawRectangles2(int x, int y, int radius, int count, int size) {
+  for (int i = 0; i < count; i++) {
+    stroke(240, 200, 250, i);
+   
+    float alpha = ((i * 100)/count)/5;     
+    float colR = ((i * 255)/count);
+    float colG = ((i * 255)/count);
+    float colB = 255-(((i * 255)/count)/20.5);
+
+    fill(colR, colG, colB, alpha);
+
+    rectMode(CENTER);
+    rect(radius-(i*7), y, (size-(i/10)), (size-(i/2)));
+    stroke(i, 0, 255, alpha);
+  }
+}
+
+void drawRectangles(int x, int y, int radius, int count, int size, color c) {
+  for (int i = 0; i < count; i++) {
+    stroke(240, 200, 250, i);
+    int alpha = (i+10);
+    if (alpha >= 100) {
+      alpha = 0;
+    }
+    fill(c, i);
+    rotate(2*PI/count);
+    rectMode(CENTER);
+    rect(radius-(i*2), i*5, (size-(i/5)), (size-(i/2)));
+    stroke(i, 0, 255, i+35);
+
+    int num = (i+1);
+    ellipse(radius, 0, (count/num), 2);
+  }
+}
